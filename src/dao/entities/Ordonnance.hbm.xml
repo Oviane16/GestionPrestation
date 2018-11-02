@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 23 sept. 2017 09:52:33 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="dao.entities.Ordonnance" table="ORDONNANCE">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="medecin" class="dao.entities.Medecin" fetch="join">
+            <column name="MEDECIN" />
+        </many-to-one>
+        <many-to-one name="medicament" class="dao.entities.Medicament" fetch="join">
+            <column name="MEDICAMENT" />
+        </many-to-one>
+        <many-to-one name="patient" class="dao.entities.Patient" fetch="join">
+            <column name="PATIENT" />
+        </many-to-one>
+        <property name="numero" type="java.lang.String">
+            <column name="NUMERO" />
+        </property>
+        <property name="nbJour" type="java.lang.Integer">
+            <column name="NBJOUR" />
+        </property>
+        <property name="dateCons" type="java.util.Date">
+            <column name="DATECONS" />
+        </property>
+    </class>
+</hibernate-mapping>

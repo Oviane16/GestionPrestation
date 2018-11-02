@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"> 
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.min.css" > </h:outputStylesheet>
+    <h:outputStylesheet library="css" name="sb-admin.css" > </h:outputStylesheet>
+    <h:outputStylesheet library="css" name="plugins/morris.css" > </h:outputStylesheet>
+    <h:outputStylesheet library="font-awesome" name="css/font-awesome.min.css" > </h:outputStylesheet>
+        <!-- Datatable css -->
+    	    <h:outputStylesheet library="dataTable" name="css/dataTables.bootstrap.min.css" > </h:outputStylesheet>
+    <!-- /Datatable css -->	 
+    <h:outputScript library="js" name="jquery.js"></h:outputScript>
+        <h:outputScript library="js" name="bootstrap.js"></h:outputScript>
+    <h:outputScript library="js" name="bootstrap.min.js"></h:outputScript>
+         <!-- Datatable js -->
+     	  <h:outputScript library="dataTable" name="js/jquery.dataTables.min.js"></h:outputScript>
+     	   <h:outputScript library="dataTable" name="js/dataTables.bootstrap.min.js"></h:outputScript>
+     	   <h:outputScript library="dataTable" name="js/dataTables.buttons.min.js"></h:outputScript>
+     <!-- /Datatable js -->
+     <script>
+
+    $(document).ready(function() {
+
+        $('.table').dataTable( {
+            "language": {
+                "sProcessing":     "Traitement en cours...",
+                "sSearch":         "Rechercher&nbsp;:",
+                "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+                "sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                "sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                "sInfoPostFix":    "",
+                "sLoadingRecords": "Chargement en cours...",
+                "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
+                "oPaginate": {
+                    "sFirst":      "Premier",
+                    "sPrevious":   "Pr&eacute;c&eacute;dent",
+                    "sNext":       "Suivant",
+                    "sLast":       "Dernier"
+                },
+                "oAria": {
+                    "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                }
+            }
+        } );
+    });
+</script>
+    <script>
+    function fermerModal()
+    {
+    	//$('#myModalSupp').dialog("close");
+    	$("#myModalSupp").modal("hide");
+    	return false;
+    }
+    </script>
+<title>Gestion de prestation</title>
+</h:head>
+<body>
+ 	<div id="wrapper">
+ 		<!-- include header -->
+		<ui:include src="/header.xhtml" />
+		<!-- /include header -->
+        <!-- Contenue -->
+        	<div id="page-wrapper">
+        		<div class="container-fluid">
+					<div class="row">
+                    	<div class="col-lg-12">
+                        	<h1 class="page-header">
+                            	Admin Ordonnance
+                        	</h1>
+                        	
+                     	</div>
+                 	</div>
+                 	 <!-- modal Modification -->
+								<div id="myModal" class="modal fade" role="dialog">
+									<div class="modal-dialog">
+									    <!-- Modal content-->
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <button type="button" class="close" data-dismiss="modal">&times;</button>
+									        <h4 class="modal-title">Modification</h4>
+									      </div>
+									     <div class="modal-body">
+									         <h:form id="formModif">
+										        <div classs="col-xs-2">
+										            <div classs="col-xs-2">
+		                    				<h:inputHidden  value="#{OrdonnanceController.idPatient}" />  
+		                    			</div>
+		                    			<div classs="col-xs-2">
+		                    				<label>Num Medecin</label>
+		                    				<h:selectOneMenu value="#{OrdonnanceController.numeroMedec}" class="form-control" >
+		                    					<f:selectItems value="#{OrdonnanceController.listNumMedec}">
+		                    					</f:selectItems>
+		                    				</h:selectOneMenu>
+		                    			</div>
+		                    			<div classs="col-xs-2">
+		                    				<label>Num Medicament</label>
+		                    				<h:selectOneMenu value="#{OrdonnanceController.numeroMedic}" class="form-control" >
+		                    					<f:selectItems value="#{OrdonnanceController.listNumMedic}">
+		                    					</f:selectItems>
+		                    				</h:selectOneMenu>
+		                    			</div>
+		                    			
+		                    			<div classs="col-xs-2">
+		                    				<label>nombre de jour</label>
+		                    				<h:inputText type="number" value="#{OrdonnanceController.nbJour}" class="form-control" />
+		                    			</div>
+								            
+										            
+										            
+										            		<div class="modal-footer">
+										                    			<h:commandButton  value="Enregistrer" onclick="fermerModal()" action="#{OrdonnanceController.edit()}" class="btn btn-default" >  
+										                    					<f:ajax execute="@form" render=":listOrdonnance"/>
+										                    				<f:param name="id" value="#{OrdonnanceController.idOrdo}">
+										                    				</f:param>
+										                    				</h:commandButton>
+									        								<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+									      				</div> 
+									      			</div>
+										      </h:form>       
+									      </div>
+									    </div>
+									  </div>
+									</div>
+            			<!--  /modal -->
+            			
+            			
+            			<!-- modal Suppression -->
+								<div id="myModalSupp" class="modal fade" role="dialog">
+									<div class="modal-dialog">
+									    <!-- Modal content-->
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <button type="button" class="close" data-dismiss="modal">&times;</button>
+									        <h4 class="modal-title">Voulez-vous vraiment supprimer?</h4>
+									      </div>
+									     <div class="modal-body">
+									         <h:form id="formSupp">
+										            <div classs="col-xs-2">
+		                    				<h:inputHidden value="#{OrdonnanceController.idPatient}" />  
+		                    			</div>
+		                    			<div classs="col-xs-2">
+		                    				<label>Num Medecin</label>
+		                    				<h:inputText readonly="true" value="#{OrdonnanceController.numeroMedec}" class="form-control" >
+		                    				</h:inputText>
+		                    			</div>
+		                    			<div classs="col-xs-2">
+		                    				<label>Num Medicament</label>
+		                    				<h:inputText readonly="true" value="#{OrdonnanceController.numeroMedic}" class="form-control" >
+		                    				</h:inputText>
+		                    			</div>
+		                    			
+		                    			<div classs="col-xs-2">
+		                    				<label>nombre de jour</label>
+		                    				<h:inputText type="number" readonly="true" value="#{OrdonnanceController.nbJour}" class="form-control" />
+		                    			</div>
+										              			<div class="modal-footer">
+										                    			<h:commandButton id="oui" data-dismiss="modal" onclick="fermerModal()" type="button" value="Oui" action="#{OrdonnanceController.delete}" class="btn btn-default" >  
+										                    				<f:ajax execute="@form" render=":listOrdonnance"/>
+										                    				<f:param name="id" value="#{OrdonnanceController.idOrdo}">
+										                    				</f:param>
+										                    				</h:commandButton>
+									        					<button type="button" class="btn btn-default" data-dismiss="modal">Non</button>
+									      				</div> 
+									      		
+										      </h:form>       
+									      </div>
+									    </div>
+									  </div>
+									</div>
+            			<!--  /modal -->
+                 	
+                 	
+                 	
+                 	 <!-- Formulaire -->
+		           			  <div class="row" id="row">
+		                    	<h:form id="ordonnanceForm">
+		                    		
+		                    					<div class="row">
+                    						<div class="col-lg-12">
+                        						<h4 class="page-header">
+                            						Liste des ordonnances
+                            						
+                        						</h4>
+                     						</div>
+                 					</div>
+		                    	 	<h:dataTable ajaxRendered="true" id="listOrdonnance" styleClass="table table-bordered table-hover" value="#{OrdonnanceController.listOrdonnance}" var="o">
+			                    		<h:column>
+			                    		<f:facet name="header">Numero ordo</f:facet>
+			                    		     <h:outputText value="#{o.numero}" />        		
+			                    		</h:column>
+			                    		<h:column>
+			                    		<f:facet name="header">Date cons</f:facet>
+			                    		     <h:outputText value="#{o.dateCons}" />        		
+			                    		</h:column>
+			                    		<h:column>
+			                    		<f:facet name="header">Nom Patient</f:facet>
+			                    		            <h:outputText value="#{o.patient.nom}" />   		
+			                    		</h:column>
+			                    		<h:column>
+			                    		<f:facet name="header">Nb jour</f:facet>
+			                    		            <h:outputText value="#{o.nbJour}" />   		
+			                    		</h:column>
+			                    		<h:column>
+			                    		<f:facet name="header">NomMedicament</f:facet>
+			                    		            <h:outputText value="#{o.medicament.design}" />   		
+			                    		</h:column>
+			                    		<h:column>
+			                    		<f:facet name="header">NumMedecin</f:facet>
+			                    		      <h:outputText value="#{o.medecin.numero}" />   		
+			                    		</h:column>
+			                    		<h:column>
+			                    		<f:facet name="header">NomMedecin</f:facet>
+			                    		      <h:outputText value="#{o.medecin.nom}" />   		
+			                    		</h:column>
+			                    				<h:column>
+		                    		<f:facet name="header">Action</f:facet>
+		                    			<h:commandButton value="Supprimer" type="button" action="#{OrdonnanceController.findById()}" class="btn btn-default btn-xs" onclick="$('#myModalSupp').modal('show');" immediate="true" >
+		                    				<f:ajax  render=":formSupp"/>
+		                    				<f:param name="id" value="#{o.id}">
+		                    				</f:param>
+		                    			</h:commandButton> 
+		                    			<h:commandButton value="Modifier" type="button" action="#{OrdonnanceController.findById()}" class="btn btn-default btn-xs" onclick="$('#myModal').modal('show');" immediate="true" >
+		                    				<f:ajax  render=":formModif"/>
+		                    				<f:param name="id" value="#{o.id}">
+		                    				</f:param>
+		                    			</h:commandButton>                      		
+		                    		</h:column>
+			                    		
+		                    		</h:dataTable>  	
+		                    		</h:form>
+		                    		</div>
+            		<!-- /Formulaire -->
+            	</div>
+            </div>
+	
+        <!-- /Contenue -->
+	</div>
+</body>
+</html>

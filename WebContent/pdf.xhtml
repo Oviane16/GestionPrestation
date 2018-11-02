@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+
+</h:head> 
+<body> 
+	<div  class="col-lg-4">
+		                    			Information du Patient
+			                   	<h:dataTable value="#{FactureController.p}" var="p" >
+		                    	 	<h:column>
+			                    	 	N°MEDECIN :<br/>
+			                    	 	NOM		  :<br/>
+			                    	 	ADRESSE	  :<br/>
+			                    	 </h:column>
+			                    	 <h:column>
+			                    	 		<h:outputText value="#{p.numero}" /><br/>
+			                    	 		<h:outputText value="#{p.nom}" /><br/>
+			                    	 		<h:outputText value="#{p.adresse}" /><br/>
+			                    	 </h:column>
+		                    	 </h:dataTable>
+		                    	 	</div>
+		                    	 	<div  class="col-lg-11">
+		                    		Liste des Medicaments prise
+		                    		</div>
+		                    	 	
+
+		                    	 <h:dataTable  value="#{FactureController.listOrdonnance}" var="o">
+		                    		<h:column>
+		                    		<f:facet name="header">N° Medicament</f:facet>
+		                    			<h:outputText value="#{o.medicament.numero}" />		                    		
+		                    		</h:column>
+		                    		<h:column>
+		                    		<f:facet name="header">Designation</f:facet>
+		                    			<h:outputText value="#{o.medicament.design}" />		                    		
+		                    		</h:column>
+		                    		<h:column>
+		                    		<f:facet name="header">Date de prise</f:facet>
+		                    			<h:outputText value="#{o.dateCons}" />		                    		
+		                    		</h:column>
+		                    		
+		                    		<h:column>
+		                    		<f:facet name="header">Montant</f:facet>
+		                    			<h:outputText value="#{o.medicament.pu}" />		                    		
+		                    		</h:column>
+		                    		
+		                    	</h:dataTable>
+		                
+
+</body> 
+</html>

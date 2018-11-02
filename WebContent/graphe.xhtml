@@ -1,0 +1,55 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ct="http://www.chartistjsf.org/charts">
+    <f:view contentType="text/html">
+        <h:head>
+          <h:outputStylesheet library="css" name="bootstrap.min.css" > </h:outputStylesheet>
+    <h:outputStylesheet library="css" name="sb-admin.css" > </h:outputStylesheet>
+    <h:outputStylesheet library="css" name="plugins/morris.css" > </h:outputStylesheet>
+    <h:outputStylesheet library="font-awesome" name="css/font-awesome.min.css" > </h:outputStylesheet>
+    <h:outputStylesheet library="datepicker" name="css/datepicker.css" > </h:outputStylesheet>
+        <h:outputStylesheet library="datepicker" name="less/datepicker.less" > </h:outputStylesheet>
+        
+    <h:outputScript library="js" name="jquery.js"></h:outputScript>
+    <h:outputScript library="js" name="bootstrap.js"></h:outputScript>
+    <h:outputScript library="js" name="bootstrap.min.js"></h:outputScript>
+    <h:outputScript library="datepicker" name="js/bootstrap-datepicker.js"></h:outputScript>
+    <h:outputScript library="datepicker" name="js/bootstrap-datepicker.js"></h:outputScript>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Graphe de la prestation</title>
+            </f:facet>
+        </h:head>
+        <h:body>
+        	<div id="wrapper">
+ 					<!-- include header -->
+						<ui:include src="/header.xhtml" />
+					<!-- /include header -->
+        			<!-- Contenue -->
+        				<div id="page-wrapper">
+        					<div class="container-fluid">
+								<div class="row">
+                    				<div class="col-lg-12">
+                        				<h2 class="page-header">
+                            				graphe prestation
+                        				</h2>
+                     				</div>
+                 				</div>
+        
+						            <div style="width: 60%; height: 60%; margin-left: auto; margin-right: auto; margin-top: auto; margin-bottom: auto;">
+						                <ct:chart id="lineChart" type="line" model="#{GrapheController.lineModel}">
+											<p:ajax event="itemSelect" listener="#{GrapheController.itemSelect}" update="lineChartMessage" />
+										</ct:chart>
+						
+										<p:message id="lineChartMessage" for="lineChart" showDetail="true" />
+						            </div> 
+           				 	</div>
+             			</div>
+             		</div>
+        </h:body>
+    </f:view>
+</html>

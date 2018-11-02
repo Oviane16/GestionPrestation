@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"> 
+<h:head>
+    <h:outputStylesheet library="css" name="bootstrap.min.css" > </h:outputStylesheet>
+    <h:outputStylesheet library="css" name="sb-admin.css" > </h:outputStylesheet>
+    <h:outputStylesheet library="css" name="plugins/morris.css" > </h:outputStylesheet>
+    <h:outputStylesheet library="font-awesome" name="css/font-awesome.min.css" > </h:outputStylesheet>
+    <h:outputStylesheet library="datepicker" name="css/datepicker.css" > </h:outputStylesheet>
+        <h:outputStylesheet library="datepicker" name="less/datepicker.less" > </h:outputStylesheet>
+        
+    <h:outputScript library="js" name="jquery.js"></h:outputScript>
+    <h:outputScript library="js" name="bootstrap.js"></h:outputScript>
+    <h:outputScript library="js" name="bootstrap.min.js"></h:outputScript>
+    <h:outputScript library="datepicker" name="js/bootstrap-datepicker.js"></h:outputScript>
+    <h:outputScript library="datepicker" name="js/bootstrap-datepicker.js"></h:outputScript>
+<script>
+$(function (){
+	$('.de').datepicker({
+		   format: 'yyyy/mm/dd'
+		});
+	});
+</script>
+<title>Gestion de prestation</title>
+</h:head>
+<body>
+ 	<div id="wrapper">
+ 		<!-- include header -->
+		<ui:include src="/header.xhtml" />
+		<!-- /include header -->
+        <!-- Contenue -->
+        	<div id="page-wrapper">
+        		<div class="container-fluid">
+					<div class="row">
+                    	<div class="col-lg-12">
+                        	<h1 class="page-header">
+                            	Etat Patient
+                        	</h1>
+                     	</div>
+                 	</div>
+                 	 <!-- Formulaire -->
+		           			  <div class="row" id="row">
+		                    	<h:form id="ordonnanceForm">
+		                    		<div class="col-lg-6">
+		                    			<div classs="col-xs-2">
+		                    				<label>Num Patient</label>
+		                    				<h:selectOneMenu value="#{EtatPatientController.numeroPatient}" class="form-control" >
+		                    					<f:selectItems value="#{EtatPatientController.listNumPatient}">
+		                    					</f:selectItems>
+		                    				</h:selectOneMenu>
+		                    				 <div class="col-xs-4">
+			                    				<label for="de">De</label>
+			                    				<h:inputText value="#{EtatPatientController.dateDe}" id="de" class="de form-control"  />
+			                    	
+		                    				</div>
+		                    				<div class="col-xs-4">
+			                    				<label for="a">A</label>
+			                    				<h:inputText value="#{EtatPatientController.dateA}" id="a" class="de form-control"  />
+		                    				</div>
+		                    				<div class="col-xs-10">
+		                    					<br/>
+		                    				</div>
+		                    				<div class="col-xs-5">
+		                    					<h:commandButton  value="Afficher" class="btn btn-default" >  
+		                    					<f:ajax execute="@form"  listener="#{EtatPatientController.infoPatient}" render="infoPatient" />
+		                    					<f:ajax execute="@form"  listener="#{EtatPatientController.patientConsMedec}" render="listOrdonnance" />
+		                    					<f:ajax execute="@form"  listener="#{EtatPatientController.total}" render="total" />
+		                    				</h:commandButton>
+		                    				</div>
+		                    			</div>
+		                    		</div> 
+		                    		<div  class="col-lg-11">
+		                    		<br/>
+		                    		</div>
+		                    		<div  class="col-lg-4">
+		                    			Information du Patient
+			                   			<h:dataTable class="table table-bordered table-hover"  ajaxRendered="#{EtatPatientController.infoPatient}" id="infoPatient"  value="#{EtatPatientController.p}" var="p" >
+		                    	 	<h:column>
+			                    	 	N°MEDECIN :<br/>
+			                    	 	NOM		  :<br/>
+			                    	 	ADRESSE	  :<br/>
+			                    	 </h:column>
+			                    	 <h:column>
+			                    	 		<h:outputText value="#{p.numero}" /><br/>
+			                    	 		<h:outputText value="#{p.nom}" /><br/>
+			                    	 		<h:outputText value="#{p.adresse}" /><br/>
+			                    	 </h:column>
+		                    	 	</h:dataTable>
+		                    	 	</div>
+		                    	 	
+		                    	 	
+		                    	 	<h:dataTable ajaxRendered="true" id="listOrdonnance" class="table table-bordered table-hover" value="#{EtatPatientController.listOrdonnance}" var="o">
+		                    		<h:column>
+		                    		<f:facet name="header">N° Medecin</f:facet>
+		                    			<h:outputText value="#{o.medecin.numero}" />		                    		
+		                    		</h:column>
+		                    		<h:column>
+		                    		<f:facet name="header">Nom</f:facet>
+		                    			<h:outputText value="#{o.medecin.nom}" />		                    		
+		                    		</h:column>
+		                    		<h:column>
+		                    		<f:facet name="header">Prestation</f:facet>
+		                    			<h:outputText value="#{o.medecin.tauxJournalier*o.nbJour}" />		                    		
+		                    		</h:column>
+		                    		
+		                    	</h:dataTable>
+		                    	<div >
+		                    			Total : <h:outputText id="total" value="#{EtatPatientController.total}"></h:outputText> Ar
+		                    		</div>
+		                    		</h:form>
+		                    		
+		                    		</div>
+            		<!-- /Formulaire -->
+            	</div>
+            </div>
+	
+        <!-- /Contenue -->
+	</div>
+</body>
+</html>
